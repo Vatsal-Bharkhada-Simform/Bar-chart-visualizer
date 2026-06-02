@@ -1,11 +1,13 @@
 import DataForm from "../components/DataForm";
+import DataList from "../components/DataList";
 
 export default function DataView(){
     return (
-        <>
-            <aside className="h-full p-4 flex flex-col">
-                <DataForm />
-            </aside>
-        </>
-    )
+		<>
+			<aside className="max-h-full flex flex-col border-r border-r-gray-300">
+				<DataForm />
+                <DataList />
+			</aside>
+		</>
+	);
 }
