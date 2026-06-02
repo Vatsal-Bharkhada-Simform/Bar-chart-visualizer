@@ -1,8 +1,10 @@
+import DataView from "./layout/DataView";
+
 function App() {
 	return (
-		<>
-			<h1>Bar chart visualizer</h1>
-		</>
+		<main className="w-full h-screen flex">
+            <DataView />
+        </main>
 	);
 }
 
