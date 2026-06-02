@@ -1,13 +1,18 @@
 import { useState } from "react";
-import type { DataItem } from "../types/ChartTypes";
+import type { DataItem, DataItemProp } from "../types/ChartTypes";
 import { ChartContext } from "./ChartContext";
 
 export default function ChartContextProvider({children}){
     const [data, setData] = useState<DataItem[]>([]);
 
-    function addDataItem(newItem: DataItem){
-        newItem.id = data.length === 0 ? 1 : data.at(-1).id+1;
-        setData(prev => [...prev, newItem]);
+    console.log(data);
+
+    function addDataItem(newItem: DataItemProp){
+        const dataItem: DataItem = {
+            ...newItem,
+            id: data.length === 0 ? 1 : data.at(-1).id+1
+        }
+        setData(prev => [...prev, dataItem]);
     }
 
     function removeDataItem(dataItem: DataItem){
