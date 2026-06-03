@@ -8,16 +8,16 @@ export default function DataList() {
 
 	return (
 		<ul className="list-none p-4 max-h-full flex flex-col gap-2 overflow-y-auto scrollbar-thin">
-			{
-				data.map((item) => <DataItem data={item} key={item.id} />)
-			}
+			{data.map((item) => (
+				<DataItem data={item} key={item.id} />
+			))}
 		</ul>
 	);
 }
 
 function DataItem({ data }: { data: DataItem }) {
-    const { removeDataItem } = useContext(ChartContext);
-    
+	const { removeDataItem } = useContext(ChartContext);
+
 	return (
 		<>
 			<li className="flex flex-row items-center gap-2 p-4 border border-gray-300 bg-gray-50 rounded-xl group">
