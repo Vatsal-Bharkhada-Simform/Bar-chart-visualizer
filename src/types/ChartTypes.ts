@@ -1,8 +1,8 @@
 type DataItem = {
-    id: number;
-    label: string;
-    value: number;
-}
+	id: number;
+	label: string;
+	value: number;
+};
 
 type DataItemProp = {
 	label: string;
