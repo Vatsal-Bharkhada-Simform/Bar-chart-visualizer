@@ -2,14 +2,7 @@ import { useContext, useLayoutEffect, useState } from "react";
 import { ChartContext } from "../context/ChartContext";
 import { barColors } from "../utils/barColors";
 import Candle from "../components/Candle";
-
-type CandleData = {
-	height: number;
-	id: string;
-	label: string;
-	value: number;
-	color: string;
-};
+import type { CandleData } from "../types/ChartTypes";
 
 export default function Chart() {
 	const [candleData, setCandleData] = useState<Array<CandleData>>([]);
@@ -36,9 +29,10 @@ export default function Chart() {
 						height: Math.floor(
 							(item.value / maxValue) * totalHeight
 						),
-						color: String(barColors[item.label[0]]),
+						color: String(barColors[item.label[0].toUpperCase()]),
 					};
 				});
+                console.log(candles);
 				setCandleData(candles);
 			}
 		}
@@ -54,7 +48,7 @@ export default function Chart() {
 							return (
 								<div className="flex-1 relative">
 									<span className="text-gray-400 absolute bottom-0 right-0 px-2 translate-y-1/2">
-										{((maxValue / 10) * (index))}
+										{(maxValue / 10) * index}
 									</span>
 								</div>
 							);
@@ -62,18 +56,13 @@ export default function Chart() {
 					</div>
 					<div
 						id="chart-box"
-						className="relative h-full w-full flex gap-6 overflow-x-auto pb-14 px-6"
+						className="relative h-full w-full overflow-x-hidden"
 					>
-						{candleData.map((dataItem) => {
-							return (
-								<Candle
-									height={dataItem.height}
-									label={dataItem.label}
-									color={dataItem.color}
-									key={dataItem.id}
-								/>
-							);
-						})}
+						<div className="h-full w-full flex gap-6 overflow-x-auto pb-14 px-6">
+							{candleData.map((dataItem) => {
+								return <Candle candleData={dataItem} />;
+							})}
+						</div>
 						<div className="absolute inset-0 mb-14 -z-10 flex flex-col">
 							{Array.from({ length: 11 }).map(() => {
 								return (

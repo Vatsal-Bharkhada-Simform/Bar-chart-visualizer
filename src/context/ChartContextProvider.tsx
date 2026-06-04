@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactElement } from "react";
 import type { DataItem, DataItemProp } from "../types/ChartTypes";
 import { ChartContext } from "./ChartContext";
 
@@ -35,7 +35,7 @@ const defaultValue: Array<DataItem> = [
     },
 ];
 
-export default function ChartContextProvider({ children }) {
+export default function ChartContextProvider({ children } : {children: ReactElement}) {
 	const [data, setData] = useState<Array<DataItem>>(defaultValue);
 
 	console.log(data);

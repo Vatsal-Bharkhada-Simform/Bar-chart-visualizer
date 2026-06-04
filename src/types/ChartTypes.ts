@@ -10,9 +10,17 @@ type DataItemProp = {
 };
 
 type ChartContextType = {
-	data: DataItem[];
+    data: DataItem[];
 	addDataItem: (data: DataItemProp) => void;
 	removeDataItem: (data: DataItem) => void;
 };
 
-export type { DataItem, DataItemProp, ChartContextType };
+type CandleData = {
+    height: number;
+    id: string;
+    label: string;
+    value: number;
+    color: string;
+};
+
+export type { DataItem, DataItemProp, ChartContextType, CandleData };
