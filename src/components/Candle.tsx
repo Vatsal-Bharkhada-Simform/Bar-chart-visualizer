@@ -23,6 +23,7 @@ export default function Candle({candleData}: {candleData: CandleData}) {
 				<div
                     id={candleData.id}
 					className={`w-18 rounded-t-xl`}
+                    data-type={"BAR"}
 					style={{
 						height: candleData.height + "px",
 						backgroundColor: candleData.color,

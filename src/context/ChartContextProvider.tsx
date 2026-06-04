@@ -37,9 +37,7 @@ const defaultValue: Array<DataItem> = [
 
 export default function ChartContextProvider({ children } : {children: ReactElement}) {
 	const [data, setData] = useState<Array<DataItem>>(defaultValue);
-
-	console.log(data);
-
+    
 	function addDataItem(newItem: DataItemProp) {
 		const dataItem: DataItem = {
 			...newItem,
