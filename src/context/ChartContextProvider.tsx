@@ -2,17 +2,50 @@ import { useState } from "react";
 import type { DataItem, DataItemProp } from "../types/ChartTypes";
 import { ChartContext } from "./ChartContext";
 
+const defaultValue: Array<DataItem> = [
+    {
+        id: crypto.randomUUID(),
+        label: "Apple",
+        value: 300
+    },
+    {
+        id: crypto.randomUUID(),
+        label: "Banana",
+        value: 140
+    },
+    {
+        id: crypto.randomUUID(),
+        label: "Orange",
+        value: 250
+    },
+    {
+        id: crypto.randomUUID(),
+        label: "Mango",
+        value: 400
+    },
+    {
+        id: crypto.randomUUID(),
+        label: "Papaya",
+        value: 210
+    },
+    {
+        id: crypto.randomUUID(),
+        label: "Watermelon",
+        value: 180
+    },
+];
+
 export default function ChartContextProvider({ children }) {
-	const [data, setData] = useState<DataItem[]>([]);
+	const [data, setData] = useState<Array<DataItem>>(defaultValue);
 
 	console.log(data);
 
 	function addDataItem(newItem: DataItemProp) {
 		const dataItem: DataItem = {
 			...newItem,
-			id: data.length === 0 ? 1 : data.at(-1).id + 1,
+			id: crypto.randomUUID(),
 		};
-		setData((prev) => [dataItem, ...prev]);
+		setData((prev) => [...prev, dataItem]);
 	}
 
 	function removeDataItem(dataItem: DataItem) {
