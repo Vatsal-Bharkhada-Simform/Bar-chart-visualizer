@@ -2,7 +2,7 @@ import DataView from "./layout/DataView";
 
 function App() {
 	return (
-		<div className="w-full h-screen overflow-hidden flex flex-col">
+		<div className="w-full h-screen overflow-hidden flex flex-col tracking-tighter">
 			<header className="w-full p-4 border-b border-b-gray-300">
 				<h1 className="text-xl font-semibold">Bar Chart Visualizer</h1>
 			</header>
