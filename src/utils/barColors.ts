@@ -1,4 +1,4 @@
-export const barColors = {
+export const barColors: Record<string, string> = {
 	A: "#FF6B81", // soft rose
 	B: "#6EC6FF", // sky blue
 	C: "#7ED957", // fresh green

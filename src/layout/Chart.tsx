@@ -49,7 +49,7 @@ export default function Chart() {
 
         if(belowElement?.dataset.type !== "BAR") return;
         
-        if(lastElementRef.current){
+        if(lastElementRef.current && tooltipRef.current){
             if(lastElementRef.current === belowElement) return;
             lastElementRef.current = belowElement;
 

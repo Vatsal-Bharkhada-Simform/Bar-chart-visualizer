@@ -5,7 +5,8 @@ export default function Candle({candleData}: {candleData: CandleData}) {
     const ref = useRef(0);
     
     useLayoutEffect(() => {
-        const whiteRabbit = document.getElementById(candleData.id);
+        const barElement = document.getElementById(candleData.id);
+        if(!barElement) return;
 
         const keyframes = [{ height: candleData.height + "px" }];
         if(!ref.current){
@@ -14,7 +15,7 @@ export default function Candle({candleData}: {candleData: CandleData}) {
         }
         const timing: KeyframeAnimationOptions = { easing: "ease" ,duration: 1000, fill: "forwards" }
 
-        whiteRabbit.animate(keyframes, timing);
+        barElement.animate(keyframes, timing);
     }, [candleData.height, candleData.id]);
     
 	return (
