@@ -1,5 +1,5 @@
 type DataItem = {
-	id: number;
+	id: string;
 	label: string;
 	value: number;
 };
