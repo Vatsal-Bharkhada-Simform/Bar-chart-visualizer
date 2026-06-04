@@ -44,6 +44,7 @@ export default function DataForm() {
 				id="value"
 				name="value"
 				min={0}
+                step={"any"}
 				placeholder="Enter value"
 			/>
 			<button

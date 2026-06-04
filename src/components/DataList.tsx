@@ -7,7 +7,7 @@ export default function DataList() {
 	const { data } = useContext(ChartContext);
 
 	return (
-		<ul className="list-none p-4 max-h-full flex flex-col gap-2 overflow-y-auto scrollbar-thin">
+		<ul className="list-none p-4 max-h-full flex flex-col-reverse gap-2 overflow-y-auto scrollbar-thin">
 			{data.map((item) => (
 				<DataItem data={item} key={item.id} />
 			))}
