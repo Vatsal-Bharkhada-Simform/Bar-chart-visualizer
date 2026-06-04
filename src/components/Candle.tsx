@@ -1,24 +1,35 @@
-export default function Candle({
-	label,
-	height,
-	color = "#555",
-}: {
-	label: string;
-	height: number;
-	color?: string;
-}) {
+import { useLayoutEffect, useRef } from "react";
+import type { CandleData } from "../types/ChartTypes";
+
+export default function Candle({candleData}: {candleData: CandleData}) {
+    const ref = useRef(0);
+    
+    useLayoutEffect(() => {
+        const whiteRabbit = document.getElementById(candleData.id);
+
+        const keyframes = [{ height: candleData.height + "px" }];
+        if(!ref.current){
+            keyframes.unshift({height: "0px"});
+            ref.current = candleData.height;
+        }
+        const timing: KeyframeAnimationOptions = { easing: "ease" ,duration: 1000, fill: "forwards" }
+
+        whiteRabbit.animate(keyframes, timing);
+    }, [candleData.height, candleData.id]);
+    
 	return (
 		<>
 			<div className="relative flex flex-col items-center justify-end">
 				<div
-					className={`w-16 rounded-t-xl`}
+                    id={candleData.id}
+					className={`w-18 rounded-t-xl`}
 					style={{
-						height: height + "px",
-						backgroundColor: color,
+						height: candleData.height + "px",
+						backgroundColor: candleData.color,
 					}}
 				></div>
 				<div className="w-full py-4 text-center absolute bottom-0 translate-y-full overflow-hidden text-nowrap text-ellipsis">
-					{label}
+					{candleData.label}
 				</div>
 			</div>
 		</>
