@@ -23,4 +23,11 @@ type CandleData = {
     color: string;
 };
 
-export type { DataItem, DataItemProp, ChartContextType, CandleData };
+interface ToolTipState {
+	visible: boolean;
+	x: number;
+	y: number;
+	candleData: CandleData | null;
+}
+
+export type { DataItem, DataItemProp, ChartContextType, CandleData, ToolTipState };

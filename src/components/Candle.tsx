@@ -1,39 +1,59 @@
-import { useLayoutEffect, useRef } from "react";
+import { memo, useLayoutEffect, useRef } from "react";
 import type { CandleData } from "../types/ChartTypes";
 
-export default function Candle({candleData}: {candleData: CandleData}) {
-    const ref = useRef(0);
-    
-    useLayoutEffect(() => {
-        const barElement = document.getElementById(candleData.id);
-        if(!barElement) return;
+const Candle = memo( function ({
+	candleData,
+	onHover,
+    onLeave
+}: {
+	candleData: CandleData;
+	onHover: (e: React.MouseEvent, candleData: CandleData) => void;
+	onLeave: () => void;
+}) {
+	const ref = useRef(0);
+    console.log("Rendering...");
 
-        const keyframes = [{ height: candleData.height + "px" }];
-        if(!ref.current){
-            keyframes.unshift({height: "0px"});
-            ref.current = candleData.height;
-        }
-        const timing: KeyframeAnimationOptions = { easing: "ease" ,duration: 1000, fill: "forwards" }
+	useLayoutEffect(() => {
+		const barElement = document.getElementById(candleData.id);
+		if (!barElement) return;
 
-        barElement.animate(keyframes, timing);
-    }, [candleData.height, candleData.id]);
-    
+		const keyframes = [{ height: candleData.height + "px" }];
+		if (!ref.current) {
+			keyframes.unshift({ height: "0px" });
+			ref.current = candleData.height;
+		}
+		const timing: KeyframeAnimationOptions = {
+			easing: "ease",
+			duration: 1000,
+			fill: "forwards",
+		};
+
+		barElement.animate(keyframes, timing);
+	}, [candleData.height, candleData.id]);
+
 	return (
 		<>
-			<div className="relative flex flex-col items-center justify-end">
+			<div
+				className="relative flex flex-col items-center justify-end px-3 hover:bg-blue-200/50 transition-all"
+				data-type="BAR_CONT"
+			>
 				<div
-                    id={candleData.id}
-					className={`w-18 rounded-t-xl`}
-                    data-type={"BAR"}
+					id={candleData.id}
+					className={`w-20 rounded-t-xl`}
+					data-type={"BAR"}
 					style={{
 						height: candleData.height + "px",
 						backgroundColor: candleData.color,
 					}}
+					onMouseMove={(e) => onHover(e, candleData)}
+                    onMouseLeave={onLeave}
 				></div>
-				<div className="w-full py-4 text-center absolute bottom-0 translate-y-full overflow-hidden text-nowrap text-ellipsis">
+				<div className="w-full py-4 text-center absolute bottom-0 translate-y-full overflow-hidden text-nowrap text-ellipsis pointer-events-none">
 					{candleData.label}
 				</div>
 			</div>
 		</>
 	);
-}
+});
+
+export default Candle;

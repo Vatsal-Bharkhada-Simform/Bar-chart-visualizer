@@ -1,17 +1,22 @@
-import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ChartContext } from "../context/ChartContext";
 import { barColors } from "../utils/barColors";
 import Candle from "../components/Candle";
-import type { CandleData } from "../types/ChartTypes";
+import type { CandleData, ToolTipState } from "../types/ChartTypes";
 import Tooltip from "../components/Tooltip";
 
 export default function Chart() {
 	const [candleData, setCandleData] = useState<Array<CandleData>>([]);
+    const [toolTip, setToolTip] = useState<ToolTipState>({
+        visible: false,
+        x: 0,
+        y: 0,
+        candleData: null
+    });
 
 	const { data } = useContext(ChartContext);
 
-    const tooltipRef = useRef<HTMLDivElement | null>(null);
-    const lastElementRef = useRef<Element | null>(null);
+    const hideTimer = useRef<number>(0);
 
 	const maxValue = data.reduce((acc, item) => {
 		if (item.value > acc) acc = item.value;
@@ -19,6 +24,7 @@ export default function Chart() {
 	}, 0);
 
 	useLayoutEffect(() => {
+        console.log("Layout calculation");
 		function populateCandleHeight() {
 			const chartArea = document.getElementById("chart-box");
 			if (chartArea && chartArea instanceof HTMLDivElement) {
@@ -39,56 +45,47 @@ export default function Chart() {
 		}
 		populateCandleHeight();
 	}, [data, maxValue]);
-
-    function getBarData(id: string){
-        return data.find(item => item.id === id);
-    }
-
-    function handleShowTooltip(e: MouseEvent){
-        const belowElement = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement;
-
-        if(belowElement?.dataset.type !== "BAR") return;
-        
-        if(lastElementRef.current && tooltipRef.current){
-            if(lastElementRef.current === belowElement) return;
-            lastElementRef.current = belowElement;
-
-            const belowElementRect = belowElement.getBoundingClientRect();
-            const barData = getBarData(belowElement.id);
-            if(!barData) return;
-
-            tooltipRef.current.style.display = "flex";
-            tooltipRef.current.style.top = e.clientY+"px";
-            tooltipRef.current.style.left = (belowElementRect.left + belowElementRect.width/2)+"px";
-
-            const ttBar = tooltipRef.current.querySelector("#tt-bar") as HTMLElement; 
-            const ttLabel = tooltipRef.current.querySelector("#tt-label") as HTMLElement; 
-            const ttValue = tooltipRef.current.querySelector("#tt-value") as HTMLElement; 
-            ttBar.style.backgroundColor = barColors[barData.label[0].toUpperCase()];
-            ttLabel.innerText = barData.label;
-            ttValue.innerText = String(barData.value);
-        }
-        else {
-            lastElementRef.current = belowElement;
-        }
-    }
     
-    useEffect(() => {
-        const chartBox = document.getElementById("chart-box");
-        if(!chartBox || !(chartBox instanceof HTMLDivElement)) return;
-    
-        chartBox.addEventListener("mousemove", handleShowTooltip);
+    const handleCandleHover = useCallback(function (
+		e: React.MouseEvent,
+		newCandleData: CandleData
+	) {
+		if (hideTimer.current) clearTimeout(hideTimer.current);
 
-        return () => {
-            chartBox.removeEventListener("mousemove", handleShowTooltip);
-        }
-    }, []);
+		const barRect = e.currentTarget.getBoundingClientRect();
+		const newY = e.clientY;
+
+		setToolTip((prevToolTip) => {
+			if (prevToolTip.candleData === newCandleData) {
+				return prevToolTip;
+			}
+
+			return {
+				visible: true,
+				x: barRect.left + barRect.width / 2,
+				y: newY,
+				candleData: newCandleData,
+			};
+		});
+	}, []);
+
+    const handleBarLeave = useCallback(() => {
+		hideTimer.current = setTimeout(() => {
+			setToolTip((prev) => ({ ...prev, visible: false }));
+		}, 1000);
+	}, []);
+
+	useEffect(() => {
+		return () => {
+			if (hideTimer.current) clearTimeout(hideTimer.current);
+		};
+	}, []);
 
 	return (
 		<>
 			<section className="flex-1 overflow-hidden p-8 flex flex-col">
 				<div className="flex-1 flex overflow-hidden border border-gray-300">
-                    <Tooltip ref={tooltipRef} />
+                    <Tooltip data={toolTip} />
                     
 					<div className="h-full w-20 border-r border-r-gray-300 pb-14 flex flex-col-reverse">
 						{Array.from({ length: 11 }).map((_, index) => {
@@ -105,12 +102,12 @@ export default function Chart() {
 						id="chart-box"
 						className="relative h-full w-full overflow-x-hidden"
 					>
-						<div className="h-full w-full flex gap-6 overflow-x-auto pb-14 px-6">
+						<div className="h-full w-full flex overflow-x-auto pb-14 px-6">
 							{candleData.map((dataItem) => {
-								return <Candle candleData={dataItem} key={dataItem.id} />;
+								return <Candle candleData={dataItem} key={dataItem.id} onHover={handleCandleHover} onLeave={handleBarLeave} />;
 							})}
 						</div>
-						<div className="absolute inset-0 mb-14 -z-10 flex flex-col">
+						<div className="absolute inset-0 mb-14 -z-10 flex flex-col pointer-events-none">
 							{Array.from({ length: 11 }).map((_, index) => {
 								return (
 									<div key={index} className="flex-1 border-b border-b-gray-300"></div>
