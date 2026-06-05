@@ -7,7 +7,6 @@ export default function Tooltip({
 }) {
 	return (
 		<div
-			id="tooltip"
 			className="fixed pointer-events-none z-20 transition-all flex-row items-center gap-2 p-2 pr-6 border border-gray-300 bg-gray-50 rounded-xl group"
             style={{
                 display: data.visible ? "flex" : "none",
@@ -39,3 +38,4 @@ export default function Tooltip({
 		</div>
 	);
 }
+

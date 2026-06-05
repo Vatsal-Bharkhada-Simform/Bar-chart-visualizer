@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { ChartContext } from "../context/ChartContext";
 import { barColors } from "../utils/barColors";
 import Candle from "../components/Candle";
@@ -6,7 +6,6 @@ import type { CandleData, ToolTipState } from "../types/ChartTypes";
 import Tooltip from "../components/Tooltip";
 
 export default function Chart() {
-	const [candleData, setCandleData] = useState<Array<CandleData>>([]);
     const [toolTip, setToolTip] = useState<ToolTipState>({
         visible: false,
         x: 0,
@@ -23,28 +22,15 @@ export default function Chart() {
 		return acc;
 	}, 0);
 
-	useLayoutEffect(() => {
-        console.log("Layout calculation");
-		function populateCandleHeight() {
-			const chartArea = document.getElementById("chart-box");
-			if (chartArea && chartArea instanceof HTMLDivElement) {
-				const totalHeight =
-					(chartArea.getBoundingClientRect().height - 56) * (1-(1/11));
-
-				const candles = data.map((item) => {
-					return {
-						...item,
-						height: Math.floor(
-							(item.value / maxValue) * totalHeight
-						),
-						color: String(barColors[item.label[0].toUpperCase()]),
-					};
-				});
-				setCandleData(candles);
-			}
-		}
-		populateCandleHeight();
-	}, [data, maxValue]);
+    const candleData = useMemo(() => {
+        return data.map((item) => {
+            return {
+                ...item,
+                height: (item.value / maxValue) * 90.9,
+                color: String(barColors[item.label[0].toUpperCase()]),
+            };
+        });
+    }, [data, maxValue]);
     
     const handleCandleHover = useCallback(function (
 		e: React.MouseEvent,
@@ -57,7 +43,7 @@ export default function Chart() {
 
 		setToolTip((prevToolTip) => {
 			if (prevToolTip.candleData === newCandleData) {
-				return prevToolTip;
+				return {...prevToolTip};
 			}
 
 			return {
@@ -85,8 +71,8 @@ export default function Chart() {
 		<>
 			<section className="flex-1 overflow-hidden p-8 flex flex-col">
 				<div className="flex-1 flex overflow-hidden border border-gray-300">
-                    <Tooltip data={toolTip} />
-                    
+					<Tooltip data={toolTip} />
+
 					<div className="h-full w-20 border-r border-r-gray-300 pb-14 flex flex-col-reverse">
 						{Array.from({ length: 11 }).map((_, index) => {
 							return (
@@ -100,17 +86,29 @@ export default function Chart() {
 					</div>
 					<div
 						id="chart-box"
-						className="relative h-full w-full overflow-x-hidden"
+						className="relative h-full w-full overflow-x-hidden mb-4"
 					>
-						<div className="h-full w-full flex overflow-x-auto pb-14 px-6">
-							{candleData.map((dataItem) => {
-								return <Candle candleData={dataItem} key={dataItem.id} onHover={handleCandleHover} onLeave={handleBarLeave} />;
-							})}
+						<div className="h-full w-full flex overflow-x-auto pb-14 px-6 scrollbar-gutter-both">
+							<div className="flex">
+								{candleData.map((dataItem) => {
+									return (
+										<Candle
+											candleData={dataItem}
+											key={dataItem.id}
+											onHover={handleCandleHover}
+											onLeave={handleBarLeave}
+										/>
+									);
+								})}
+							</div>
 						</div>
 						<div className="absolute inset-0 mb-14 -z-10 flex flex-col pointer-events-none">
 							{Array.from({ length: 11 }).map((_, index) => {
 								return (
-									<div key={index} className="flex-1 border-b border-b-gray-300"></div>
+									<div
+										key={index}
+										className="flex-1 border-b border-b-gray-300"
+									></div>
 								);
 							})}
 						</div>

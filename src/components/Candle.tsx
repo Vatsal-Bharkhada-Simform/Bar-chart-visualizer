@@ -11,15 +11,15 @@ const Candle = memo( function ({
 	onLeave: () => void;
 }) {
 	const ref = useRef(0);
-    console.log("Rendering...");
 
 	useLayoutEffect(() => {
+        console.log("HEHE");
 		const barElement = document.getElementById(candleData.id);
 		if (!barElement) return;
 
-		const keyframes = [{ height: candleData.height + "px" }];
+		const keyframes = [{ height: candleData.height + "%" }];
 		if (!ref.current) {
-			keyframes.unshift({ height: "0px" });
+			keyframes.unshift({ height: "0%" });
 			ref.current = candleData.height;
 		}
 		const timing: KeyframeAnimationOptions = {
@@ -34,7 +34,7 @@ const Candle = memo( function ({
 	return (
 		<>
 			<div
-				className="relative flex flex-col items-center justify-end px-3 hover:bg-blue-200/50 transition-all"
+				className="relative flex flex-col items-center justify-end px-3 hover:bg-blue-200/50 transition-all h-full"
 				data-type="BAR_CONT"
 			>
 				<div
@@ -42,7 +42,7 @@ const Candle = memo( function ({
 					className={`w-20 rounded-t-xl`}
 					data-type={"BAR"}
 					style={{
-						height: candleData.height + "px",
+						height: (candleData.height + "%"),
 						backgroundColor: candleData.color,
 					}}
 					onMouseMove={(e) => onHover(e, candleData)}
