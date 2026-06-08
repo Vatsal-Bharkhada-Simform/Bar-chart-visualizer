@@ -1,23 +1,27 @@
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { ChartContext } from "../context/ChartContext";
 import type { DataItem } from "../types/ChartTypes";
 import Icon from "../UI/Icon";
 import { barColors } from "../utils/barColors";
 
 export default function DataList() {
-	const { data } = useContext(ChartContext);
+	const { data, editData } = useContext(ChartContext);
 
+    const isEditMode = editData && editData.id !== "";
+
+    const populateListItems = useCallback(function (){
+        return data.map((item) => <DataItem data={item} key={item.id} />);
+    }, [data]);
+    
 	return (
-		<ul className="list-none p-4 max-h-full flex flex-col-reverse gap-2 overflow-y-auto scrollbar-thin">
-			{data.map((item) => (
-				<DataItem data={item} key={item.id} />
-			))}
+		<ul className={`relative list-none p-4 max-h-full flex flex-col-reverse gap-2 overflow-y-auto scrollbar-thin ${isEditMode && "pointer-events-none opacity-60"}`}>
+			{populateListItems()}
 		</ul>
 	);
 }
 
 function DataItem({ data }: { data: DataItem }) {
-	const { removeDataItem } = useContext(ChartContext);
+	const { removeDataItem, setEditData } = useContext(ChartContext);
     const bg = barColors[data.label[0].toUpperCase()];
 
 	return (
@@ -35,12 +39,20 @@ function DataItem({ data }: { data: DataItem }) {
                         </div>
                     </div>
                 </div>
-				<button
-					className="p-2 border-none outline-none bg-transparent rounded-lg hover:bg-red-100 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
-					onClick={() => removeDataItem(data)}
-				>
-					<Icon id="trashBin" />
-				</button>
+				<div className="flex flex-col gap-1">
+                    <button
+                        className="p-2 border-none outline-none bg-transparent rounded-lg hover:bg-blue-100 hover:text-blue-500 opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
+                        onClick={() => setEditData(data)}
+                    >
+                        <Icon id="edit" />
+                    </button>
+                    <button
+                        className="p-2 border-none outline-none bg-transparent rounded-lg hover:bg-red-100 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
+                        onClick={() => removeDataItem(data)}
+                    >
+                        <Icon id="trashBin" />
+                    </button>
+                </div>
 			</li>
 		</>
 	);

@@ -43,7 +43,7 @@ export default function Chart() {
 
 		setToolTip((prevToolTip) => {
 			if (prevToolTip.candleData === newCandleData) {
-				return {...prevToolTip};
+				return prevToolTip;
 			}
 
 			return {

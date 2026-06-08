@@ -37,6 +37,7 @@ const defaultValue: Array<DataItem> = [
 
 export default function ChartContextProvider({ children } : {children: ReactElement}) {
 	const [data, setData] = useState<Array<DataItem>>(defaultValue);
+    const [editData, setEditData] = useState<DataItem | null>(null);
     
 	function addDataItem(newItem: DataItemProp) {
 		const dataItem: DataItem = {
@@ -50,10 +51,18 @@ export default function ChartContextProvider({ children } : {children: ReactElem
 		setData((prev) => prev.filter((item) => item.id !== dataItem.id));
 	}
 
+	function updateDataItem(dataItem: DataItem) {
+		setData((prev) => prev.map((item) => item.id === dataItem.id ? dataItem : item));
+        setEditData(null);
+	}
+
 	const ctxValue = {
 		data: data,
+        editData,
+        setEditData,
 		addDataItem,
 		removeDataItem,
+        updateDataItem
 	};
 
 	return (

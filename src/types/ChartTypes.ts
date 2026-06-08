@@ -10,9 +10,12 @@ type DataItemProp = {
 };
 
 type ChartContextType = {
-    data: DataItem[];
+	data: DataItem[];
+	editData: DataItem | null;
+	setEditData: React.Dispatch<React.SetStateAction<DataItem>>;
 	addDataItem: (data: DataItemProp) => void;
 	removeDataItem: (data: DataItem) => void;
+	updateDataItem: (data: DataItem) => void;
 };
 
 type CandleData = {
