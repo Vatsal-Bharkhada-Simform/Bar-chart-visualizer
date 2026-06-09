@@ -2,8 +2,9 @@ import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "r
 import { ChartContext } from "../context/ChartContext";
 import { barColors } from "../utils/barColors";
 import Candle from "../components/Candle";
-import type { CandleData, ToolTipState } from "../types/ChartTypes";
+import type { CandleData, LabelType, ToolTipState } from "../types/ChartTypes";
 import Tooltip from "../components/Tooltip";
+import LabelsTooltip from "../components/LabelsTooltip";
 
 export default function Chart() {
     const [toolTip, setToolTip] = useState<ToolTipState>({
@@ -11,6 +12,11 @@ export default function Chart() {
         x: 0,
         y: 0,
         candleData: null
+    });
+
+    const [labels, setLabels] = useState<LabelType>({
+        labelX: "X-axis",
+        labelY: "Y-axis"
     });
 
 	const { data } = useContext(ChartContext);
@@ -88,7 +94,13 @@ export default function Chart() {
 						id="chart-box"
 						className="relative h-full w-full overflow-x-hidden mb-4"
 					>
-						<div className="h-full w-full flex overflow-x-auto pb-14 px-6 scrollbar-gutter-both">
+                        <div className="absolute top-0 right-0 z-10 p-4 w-sm">
+                            <LabelsTooltip 
+                                labels={labels}
+                                setLabels={setLabels}
+                            />
+                        </div>
+						<div className="h-full w-full flex overflow-x-auto pb-14 px-6 scrollbar-gutter-stable">
 							<div className="flex">
 								{candleData.map((dataItem) => {
 									return (
@@ -115,7 +127,7 @@ export default function Chart() {
 					</div>
 				</div>
 				<div className="w-full p-4 border border-gray-300 border-t-0">
-					X-axis
+					{labels.labelX}
 				</div>
 			</section>
 		</>

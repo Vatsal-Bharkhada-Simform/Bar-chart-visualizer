@@ -8,7 +8,7 @@ export default function Input({ labelText = "", ...props }: InputProps) {
 			<div className="flex flex-col gap-1">
 				<label
 					htmlFor={props.id}
-					className="text-base md:text-lg font-inter tracking-tight text-primary"
+					className="text-base md:text-md font-inter tracking-tight text-primary"
 				>
 					{labelText}
 				</label>

@@ -33,4 +33,9 @@ interface ToolTipState {
 	candleData: CandleData | null;
 }
 
-export type { DataItem, DataItemProp, ChartContextType, CandleData, ToolTipState };
+type LabelType = {
+    labelX: string;
+    labelY: string;
+}
+
+export type { DataItem, DataItemProp, ChartContextType, CandleData, ToolTipState, LabelType };
