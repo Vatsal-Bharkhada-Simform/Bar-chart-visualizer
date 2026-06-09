@@ -19,6 +19,7 @@ const LabelsTooltip = memo(function ({
 		let labelX = formData.get("labelX");
 		let labelY = formData.get("labelY");
 
+        if(!labelX || !labelY) return;
 		if (typeof labelX !== "string" || typeof labelY !== "string") return;
         labelX = labelX.trim();
         labelY = labelY.trim();

@@ -11,20 +11,29 @@ export default function DataForm() {
 		e.preventDefault();
 
 		const formData = new FormData(e.currentTarget);
-		const label = formData.get("label");
+		let label = formData.get("label");
 		const value = formData.get("value");
 
+        if(!label || !value) return;
 		if (typeof label !== "string" || typeof value !== "string") return;
-		if (isNaN(Number(value))) return;
+
+        label = label.trim();
+        const finalValue = Number(value);
+
+        if (!/^[-A-Za-z. ]+$/.test(label)) {
+			alert("Please provide a proper label");
+			return;
+		}
+		if (isNaN(finalValue)) return;
 
         if(isEditMode){
             updateDataItem({
                 ...editData,
                 label: label,
-                value: Number(value)
+                value: finalValue
             });
         } else {
-            addDataItem({ label: label, value: Number(value) });
+            addDataItem({ label: label, value: finalValue });
         }
 
 		e.currentTarget.reset();
