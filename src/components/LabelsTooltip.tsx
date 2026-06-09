@@ -51,6 +51,7 @@ const LabelsTooltip = memo(function ({
 				<button
 					className={`p-2 cursor-pointer rounded-3xl hover:bg-gray-200 transition-all ${isOpen && "rotate-180"}`}
 					onClick={() => setIsOpen((prev) => !prev)}
+                    title="Toggle tooltip"
                     type="button"
 				>
 					<Icon id="chevron-down" />
