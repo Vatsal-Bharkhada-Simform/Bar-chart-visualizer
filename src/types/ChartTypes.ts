@@ -12,7 +12,7 @@ type DataItemProp = {
 type ChartContextType = {
 	data: DataItem[];
 	editData: DataItem | null;
-	setEditData: React.Dispatch<React.SetStateAction<DataItem>>;
+	setEditData: React.Dispatch<React.SetStateAction<DataItem | null>>;
 	addDataItem: (data: DataItemProp) => void;
 	removeDataItem: (data: DataItem) => void;
 	updateDataItem: (data: DataItem) => void;
