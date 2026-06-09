@@ -92,7 +92,7 @@ export default function Chart() {
 								className="uppercase text-center max-h-2/3 overflow-hidden text-ellipsis text-nowrap"
 								style={{
 									writingMode: "vertical-rl",
-                                    textOrientation: "upright"
+									textOrientation: "upright",
 								}}
 							>
 								{labels.labelY}
@@ -114,35 +114,33 @@ export default function Chart() {
 						id="chart-box"
 						className="relative h-full w-full overflow-x-hidden mb-4"
 					>
-						<div className="absolute top-0 right-0 z-10 p-4 w-sm">
+						<div className="absolute top-0 right-0 z-20 p-4 w-sm">
 							<LabelsTooltip
 								labels={labels}
 								setLabels={setLabels}
 							/>
 						</div>
-						<div className="h-full w-full flex overflow-x-auto pb-14 px-6 scrollbar-gutter-stable">
-							<div className="flex">
-								{candleData.map((dataItem) => {
-									return (
-										<Candle
-											candleData={dataItem}
-											key={dataItem.id}
-											onHover={handleCandleHover}
-											onLeave={handleBarLeave}
-										/>
-									);
-								})}
-							</div>
-						</div>
-						<div className="absolute inset-0 mb-14 -z-10 flex flex-col pointer-events-none">
-							{Array.from({ length: 11 }).map((_, index) => {
-								return (
+
+						<div className="relative h-full w-full overflow-x-auto pb-14 scrollbar-gutter-stable">
+							<div className="absolute inset-0 flex flex-col pointer-events-none mb-14">
+								{Array.from({ length: 11 }).map((_, index) => (
 									<div
 										key={index}
 										className="flex-1 border-b border-b-gray-300"
 									></div>
-								);
-							})}
+								))}
+							</div>
+
+							<div className="relative flex h-full">
+								{candleData.map((dataItem) => (
+									<Candle
+										candleData={dataItem}
+										key={dataItem.id}
+										onHover={handleCandleHover}
+										onLeave={handleBarLeave}
+									/>
+								))}
+							</div>
 						</div>
 					</div>
 				</div>
