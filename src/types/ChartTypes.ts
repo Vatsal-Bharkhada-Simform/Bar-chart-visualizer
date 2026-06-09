@@ -19,11 +19,11 @@ type ChartContextType = {
 };
 
 type CandleData = {
-    height: number;
-    id: string;
-    label: string;
-    value: number;
-    color: string;
+	height: number;
+	id: string;
+	label: string;
+	value: number;
+	color: string;
 };
 
 interface ToolTipState {
@@ -34,8 +34,15 @@ interface ToolTipState {
 }
 
 type LabelType = {
-    labelX: string;
-    labelY: string;
-}
+	labelX: string;
+	labelY: string;
+};
 
-export type { DataItem, DataItemProp, ChartContextType, CandleData, ToolTipState, LabelType };
+export type {
+	DataItem,
+	DataItemProp,
+	ChartContextType,
+	CandleData,
+	ToolTipState,
+	LabelType,
+};

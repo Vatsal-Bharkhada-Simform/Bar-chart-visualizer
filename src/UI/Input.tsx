@@ -2,7 +2,12 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	labelText?: string;
 }
 
-export default function Input({ labelText = "", id, type, ...props }: InputProps) {
+export default function Input({
+	labelText = "",
+	id,
+	type,
+	...props
+}: InputProps) {
 	if (labelText) {
 		return (
 			<div className="flex flex-col gap-1">

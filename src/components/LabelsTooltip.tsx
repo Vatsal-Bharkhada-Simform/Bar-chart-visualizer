@@ -10,8 +10,8 @@ const LabelsTooltip = memo(function ({
 	labels: LabelType;
 	setLabels: React.Dispatch<React.SetStateAction<LabelType>>;
 }) {
-    const [isOpen, setIsOpen] = useState(true);
-    
+	const [isOpen, setIsOpen] = useState(true);
+
 	function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
 		const formData = new FormData(e.currentTarget);
@@ -19,26 +19,26 @@ const LabelsTooltip = memo(function ({
 		let labelX = formData.get("labelX");
 		let labelY = formData.get("labelY");
 
-        if(!labelX || !labelY) return;
+		if (!labelX || !labelY) return;
 		if (typeof labelX !== "string" || typeof labelY !== "string") return;
-        labelX = labelX.trim();
-        labelY = labelY.trim();
+		labelX = labelX.trim();
+		labelY = labelY.trim();
 
 		if (labelX === labels.labelX && labelY === labels.labelY) return;
 
-		if (!(/^[-A-Za-z. ]+$/).test(labelX)) {
+		if (!/^[-A-Za-z. ]+$/.test(labelX)) {
 			alert("Please provide a proper label for x-axis");
 			return;
 		}
-		if (!(/^[-A-Za-z. ]+$/).test(labelY)) {
+		if (!/^[-A-Za-z. ]+$/.test(labelY)) {
 			alert("Please provide a proper label for y-axis");
 			return;
 		}
 
-        setLabels({
-            labelX,
-            labelY
-        });
+		setLabels({
+			labelX,
+			labelY,
+		});
 	}
 
 	return (
@@ -50,9 +50,9 @@ const LabelsTooltip = memo(function ({
 				<h2 className="text-lg font-semibold">Labels</h2>
 				<button
 					className={`p-2 cursor-pointer rounded-3xl hover:bg-gray-200 transition-all ${isOpen && "rotate-180"}`}
+					title="Toggle tooltip"
 					onClick={() => setIsOpen((prev) => !prev)}
-                    title="Toggle tooltip"
-                    type="button"
+					type="button"
 				>
 					<Icon id="chevron-down" />
 				</button>
@@ -61,14 +61,14 @@ const LabelsTooltip = memo(function ({
 				<Input
 					type="text"
 					labelText="X-axis label"
-                    name="labelX"
+					name="labelX"
 					defaultValue={labels.labelX}
 					id="label-x"
-                    />
+				/>
 				<Input
 					type="text"
 					labelText="Y-axis label"
-                    name="labelY"
+					name="labelY"
 					defaultValue={labels.labelY}
 					id="label-y"
 				/>

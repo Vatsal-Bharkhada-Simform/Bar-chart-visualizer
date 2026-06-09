@@ -5,7 +5,7 @@ import { ChartContext } from "../context/ChartContext";
 export default function DataForm() {
 	const { editData, addDataItem, updateDataItem } = useContext(ChartContext);
 
-    const isEditMode = (editData && editData.id !== "");
+	const isEditMode = editData && editData.id !== "";
 
 	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
@@ -14,27 +14,27 @@ export default function DataForm() {
 		let label = formData.get("label");
 		const value = formData.get("value");
 
-        if(!label || !value) return;
+		if (!label || !value) return;
 		if (typeof label !== "string" || typeof value !== "string") return;
 
-        label = label.trim();
-        const finalValue = Number(value);
+		label = label.trim();
+		const finalValue = Number(value);
 
-        if (!/^[-A-Za-z. ]+$/.test(label)) {
+		if (!/^[-A-Za-z. ]+$/.test(label)) {
 			alert("Please provide a proper label");
 			return;
 		}
 		if (isNaN(finalValue)) return;
 
-        if(isEditMode){
-            updateDataItem({
-                ...editData,
-                label: label,
-                value: finalValue
-            });
-        } else {
-            addDataItem({ label: label, value: finalValue });
-        }
+		if (isEditMode) {
+			updateDataItem({
+				...editData,
+				label: label,
+				value: finalValue,
+			});
+		} else {
+			addDataItem({ label: label, value: finalValue });
+		}
 
 		e.currentTarget.reset();
 
@@ -53,19 +53,23 @@ export default function DataForm() {
 				labelText="Label"
 				id="labelText"
 				name="label"
-                defaultValue={(isEditMode && editData?.label !== "") ? editData.label : ""}
+				defaultValue={
+					isEditMode && editData?.label !== "" ? editData.label : ""
+				}
 				maxLength={50}
 				placeholder="Enter label"
 				autoFocus
-                />
+			/>
 			<Input
 				type="number"
 				labelText="Value"
 				id="value"
 				name="value"
-                defaultValue={(isEditMode && editData?.value) ? editData.value : ""}
+				defaultValue={
+					isEditMode && editData?.value ? editData.value : ""
+				}
 				min={0}
-                step={"any"}
+				step={"any"}
 				placeholder="Enter value"
 			/>
 			<button

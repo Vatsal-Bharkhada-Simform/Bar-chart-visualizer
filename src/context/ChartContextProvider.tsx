@@ -3,42 +3,46 @@ import type { DataItem, DataItemProp } from "../types/ChartTypes";
 import { ChartContext } from "./ChartContext";
 
 const defaultValue: Array<DataItem> = [
-    {
-        id: crypto.randomUUID(),
-        label: "Apple",
-        value: 300
-    },
-    {
-        id: crypto.randomUUID(),
-        label: "Banana",
-        value: 140
-    },
-    {
-        id: crypto.randomUUID(),
-        label: "Orange",
-        value: 250
-    },
-    {
-        id: crypto.randomUUID(),
-        label: "Mango",
-        value: 400
-    },
-    {
-        id: crypto.randomUUID(),
-        label: "Papaya",
-        value: 210
-    },
-    {
-        id: crypto.randomUUID(),
-        label: "Watermelon",
-        value: 180
-    },
+	{
+		id: crypto.randomUUID(),
+		label: "Apple",
+		value: 300,
+	},
+	{
+		id: crypto.randomUUID(),
+		label: "Banana",
+		value: 140,
+	},
+	{
+		id: crypto.randomUUID(),
+		label: "Orange",
+		value: 250,
+	},
+	{
+		id: crypto.randomUUID(),
+		label: "Mango",
+		value: 400,
+	},
+	{
+		id: crypto.randomUUID(),
+		label: "Papaya",
+		value: 210,
+	},
+	{
+		id: crypto.randomUUID(),
+		label: "Watermelon",
+		value: 180,
+	},
 ];
 
-export default function ChartContextProvider({ children } : {children: ReactElement}) {
+export default function ChartContextProvider({
+	children,
+}: {
+	children: ReactElement;
+}) {
 	const [data, setData] = useState<Array<DataItem>>(defaultValue);
-    const [editData, setEditData] = useState<DataItem | null>(null);
-    
+	const [editData, setEditData] = useState<DataItem | null>(null);
+
 	function addDataItem(newItem: DataItemProp) {
 		const dataItem: DataItem = {
 			...newItem,
@@ -52,17 +56,19 @@ export default function ChartContextProvider({ children } : {children: ReactElem
 	}
 
 	function updateDataItem(dataItem: DataItem) {
-		setData((prev) => prev.map((item) => item.id === dataItem.id ? dataItem : item));
-        setEditData(null);
+		setData((prev) =>
+			prev.map((item) => (item.id === dataItem.id ? dataItem : item))
+		);
+		setEditData(null);
 	}
 
 	const ctxValue = {
 		data: data,
-        editData,
-        setEditData,
+		editData,
+		setEditData,
 		addDataItem,
 		removeDataItem,
-        updateDataItem
+		updateDataItem,
 	};
 
 	return (

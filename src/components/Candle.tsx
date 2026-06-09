@@ -1,19 +1,21 @@
 import { memo, useLayoutEffect, useRef } from "react";
 import type { CandleData } from "../types/ChartTypes";
 
-const Candle = memo( function ({
+const Candle = memo(function ({
 	candleData,
 	onHover,
-    onLeave
+	onLeave,
 }: {
 	candleData: CandleData;
-	onHover: (e: React.MouseEvent<HTMLDivElement>, candleData: CandleData) => void;
+	onHover: (
+		e: React.MouseEvent<HTMLDivElement>,
+		candleData: CandleData
+	) => void;
 	onLeave: () => void;
 }) {
 	const ref = useRef(0);
 
 	useLayoutEffect(() => {
-        console.log("HEHE");
 		const barElement = document.getElementById(candleData.id);
 		if (!barElement) return;
 
@@ -42,11 +44,11 @@ const Candle = memo( function ({
 					className={`w-20 rounded-t-xl`}
 					data-type={"BAR"}
 					style={{
-						height: (candleData.height + "%"),
+						height: candleData.height + "%",
 						backgroundColor: candleData.color,
 					}}
 					onMouseMove={(e) => onHover(e, candleData)}
-                    onMouseLeave={onLeave}
+					onMouseLeave={onLeave}
 				></div>
 				<div className="w-full py-4 text-center absolute bottom-0 translate-y-full overflow-hidden text-nowrap text-ellipsis pointer-events-none">
 					{candleData.label}
