@@ -19,8 +19,6 @@ const LabelsTooltip = memo(function ({
 		let labelX = formData.get("labelX");
 		let labelY = formData.get("labelY");
 
-        console.log(labelX, labelY);
-        
 		if (typeof labelX !== "string" || typeof labelY !== "string") return;
         labelX = labelX.trim();
         labelY = labelY.trim();
@@ -52,6 +50,7 @@ const LabelsTooltip = memo(function ({
 				<button
 					className={`p-2 cursor-pointer rounded-3xl hover:bg-gray-200 transition-all ${isOpen && "rotate-180"}`}
 					onClick={() => setIsOpen((prev) => !prev)}
+                    type="button"
 				>
 					<Icon id="chevron-down" />
 				</button>

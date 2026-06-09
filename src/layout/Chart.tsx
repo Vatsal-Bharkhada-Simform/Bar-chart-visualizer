@@ -8,8 +8,8 @@ import {
 } from "react";
 import { ChartContext } from "../context/ChartContext";
 import { barColors } from "../utils/barColors";
-import Candle from "../components/Candle";
 import type { CandleData, LabelType, ToolTipState } from "../types/ChartTypes";
+import Candle from "../components/Candle";
 import Tooltip from "../components/Tooltip";
 import LabelsTooltip from "../components/LabelsTooltip";
 
@@ -46,7 +46,7 @@ export default function Chart() {
 	}, [data, maxValue]);
 
 	const handleCandleHover = useCallback(function (
-		e: React.MouseEvent,
+		e: React.MouseEvent<HTMLDivElement>,
 		newCandleData: CandleData
 	) {
 		if (hideTimer.current) clearTimeout(hideTimer.current);

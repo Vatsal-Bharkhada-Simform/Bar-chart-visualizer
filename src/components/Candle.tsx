@@ -7,7 +7,7 @@ const Candle = memo( function ({
     onLeave
 }: {
 	candleData: CandleData;
-	onHover: (e: React.MouseEvent, candleData: CandleData) => void;
+	onHover: (e: React.MouseEvent<HTMLDivElement>, candleData: CandleData) => void;
 	onLeave: () => void;
 }) {
 	const ref = useRef(0);
