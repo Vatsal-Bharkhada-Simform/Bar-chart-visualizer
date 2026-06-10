@@ -3,14 +3,14 @@ import type { LabelType } from "../types/ChartTypes";
 import Input from "../UI/Input";
 import Icon from "../UI/Icon";
 
-const LabelsTooltip = memo(function ({
+const LabelsTooltip = memo(function LabelsTooltip({
 	labels,
 	setLabels,
 }: {
 	labels: LabelType;
 	setLabels: React.Dispatch<React.SetStateAction<LabelType>>;
 }) {
-	const [isOpen, setIsOpen] = useState(true);
+	const [isOpen, setIsOpen] = useState(false);
 
 	function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
@@ -19,18 +19,23 @@ const LabelsTooltip = memo(function ({
 		let labelX = formData.get("labelX");
 		let labelY = formData.get("labelY");
 
-		if (!labelX || !labelY) return;
+		if (!labelX || !labelY) {
+            alert("Labels can not be empty");
+            return;
+        }
+
 		if (typeof labelX !== "string" || typeof labelY !== "string") return;
+
 		labelX = labelX.trim();
 		labelY = labelY.trim();
 
 		if (labelX === labels.labelX && labelY === labels.labelY) return;
 
-		if (!/^[-A-Za-z. ]+$/.test(labelX)) {
+		if (!/^[-A-Za-z0-9(). ]+$/.test(labelX)) {
 			alert("Please provide a proper label for x-axis");
 			return;
 		}
-		if (!/^[-A-Za-z. ]+$/.test(labelY)) {
+		if (!/^[-A-Za-z0-9(). ]+$/.test(labelY)) {
 			alert("Please provide a proper label for y-axis");
 			return;
 		}
@@ -39,6 +44,7 @@ const LabelsTooltip = memo(function ({
 			labelX,
 			labelY,
 		});
+        setIsOpen(false);
 	}
 
 	return (
@@ -47,7 +53,7 @@ const LabelsTooltip = memo(function ({
 			className="flex flex-col gap-2 border border-gray-300 rounded-2xl p-4 bg-white shadow-md"
 		>
 			<div className="flex justify-between items-center">
-				<h2 className="text-lg font-semibold">Labels</h2>
+				<h2 className="text-lg font-semibold">Axis Labels</h2>
 				<button
 					className={`p-2 cursor-pointer rounded-3xl hover:bg-gray-200 transition-all ${isOpen && "rotate-180"}`}
 					title="Toggle tooltip"
@@ -74,7 +80,7 @@ const LabelsTooltip = memo(function ({
 				/>
 				<button
 					type="submit"
-					className="w-full px-6 py-2 border-none outline-none rounded-xl bg-blue-400 hover:bg-blue-500 text-white font-semibold focus:ring-3 focus:ring-blue-500 cursor-pointer"
+					className="w-full px-6 py-2 border-none outline-none rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold focus:ring-3 focus:ring-blue-600 cursor-pointer"
 				>
 					Save
 				</button>
