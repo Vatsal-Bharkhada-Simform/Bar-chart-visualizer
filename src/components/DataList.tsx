@@ -1,10 +1,10 @@
 import { useCallback, useContext } from "react";
 import { ChartContext } from "../context/ChartContext";
 import type { DataItem } from "../types/ChartTypes";
-import Icon from "../UI/Icon";
+import { Icon } from "../UI/Icon";
 import { barColors } from "../utils/barColors";
 
-export default function DataList() {
+export function DataList() {
 	const { data, editData } = useContext(ChartContext);
 
 	const isEditMode = editData && editData.id !== "";

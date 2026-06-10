@@ -1,4 +1,4 @@
-import DataView from "./layout/DataView";
+import { DataView } from "./layout/DataView";
 
 function App() {
 	return (
@@ -13,4 +13,4 @@ function App() {
 	);
 }
 
-export default App;
+export { App };

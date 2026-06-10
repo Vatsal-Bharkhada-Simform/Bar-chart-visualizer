@@ -59,4 +59,4 @@ const Candle = memo(function Candle({
 	);
 });
 
-export default Candle;
+export { Candle };

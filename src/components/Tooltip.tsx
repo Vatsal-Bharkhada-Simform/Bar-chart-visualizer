@@ -1,6 +1,6 @@
 import type { ToolTipState } from "../types/ChartTypes";
 
-export default function Tooltip({ data }: { data: ToolTipState }) {
+export function Tooltip({ data }: { data: ToolTipState }) {
 	return (
 		<div
 			className="fixed pointer-events-none z-30 transition-all flex-row items-center gap-2 p-2 pr-6 border border-gray-300 bg-gray-50 rounded-xl group"

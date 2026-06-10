@@ -1,7 +1,7 @@
 import { memo, useState, type SubmitEvent } from "react";
 import type { LabelType } from "../types/ChartTypes";
-import Input from "../UI/Input";
-import Icon from "../UI/Icon";
+import { Input } from "../UI/Input";
+import { Icon } from "../UI/Icon";
 
 const LabelsTooltip = memo(function LabelsTooltip({
 	labels,
@@ -89,4 +89,4 @@ const LabelsTooltip = memo(function LabelsTooltip({
 	);
 });
 
-export default LabelsTooltip;
+export { LabelsTooltip };

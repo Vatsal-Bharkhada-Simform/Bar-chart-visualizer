@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef } from "react";
-import Input from "../UI/Input";
+import { Input } from "../UI/Input";
 import { ChartContext } from "../context/ChartContext";
 
-export default function DataForm() {
+export function DataForm() {
 	const { editData, addDataItem, updateDataItem } = useContext(ChartContext);
 	const formRef = useRef<HTMLFormElement | null>(null);
 

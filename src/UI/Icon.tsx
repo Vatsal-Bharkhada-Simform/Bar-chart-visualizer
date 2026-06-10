@@ -1,4 +1,4 @@
-export default function Icon({
+export function Icon({
 	path = `${import.meta.env.BASE_URL}sprite.svg`,
 	id = "",
 	className = "",

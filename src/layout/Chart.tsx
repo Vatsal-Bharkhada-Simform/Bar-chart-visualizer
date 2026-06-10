@@ -9,11 +9,11 @@ import {
 import { ChartContext } from "../context/ChartContext";
 import { barColors } from "../utils/barColors";
 import type { CandleData, LabelType, ToolTipState } from "../types/ChartTypes";
-import Candle from "../components/Candle";
-import Tooltip from "../components/Tooltip";
-import LabelsTooltip from "../components/LabelsTooltip";
+import { Candle } from "../components/Candle";
+import { Tooltip } from "../components/Tooltip";
+import { LabelsTooltip } from "../components/LabelsTooltip";
 
-export default function Chart() {
+export function Chart() {
 	const [toolTip, setToolTip] = useState<ToolTipState>({
 		visible: false,
 		x: 0,
