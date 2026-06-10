@@ -3,3 +3,18 @@
 body {
 	font-family: "Inter", Arial, Helvetica, sans-serif;
 }
+
+.custom-scroll {
+	overflow-x: scroll;
+    
+	&::-webkit-scrollbar {
+        scrollbar-width: thin;
+	}
+
+	/* Handle */
+	&::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+		-webkit-border-radius: 10px;
+		border-radius: 10px;
+	}
+}

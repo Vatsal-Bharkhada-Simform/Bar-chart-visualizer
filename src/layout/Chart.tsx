@@ -99,20 +99,28 @@ export default function Chart() {
 							</div>
 						</div>
 					</div>
-					<div className="relative h-full w-20 border-r border-r-gray-300 pb-14 flex flex-col-reverse">
-						{Array.from({ length: 11 }).map((_, index) => {
-							return (
-								<div className="flex-1 relative" key={index}>
-									<span className="text-gray-400 absolute bottom-0 right-0 px-2 translate-y-1/2">
-										{(maxValue / 10) * index}
-									</span>
-								</div>
-							);
-						})}
+					<div className="h-full border-r border-r-gray-300 pb-18.5 flex flex-col-reverse min-w-8">
+						{data.length !== 0
+							? Array.from({ length: 11 }).map((_, index) => {
+									return (
+										<div
+											className="flex-1 flex justify-end items-end"
+											key={index}
+										>
+											<span className="text-gray-400 px-2 translate-y-1/2">
+												{(
+													(maxValue / 10) *
+													index
+												).toFixed(2)}
+											</span>
+										</div>
+									);
+								})
+							: ""}
 					</div>
 					<div
 						id="chart-box"
-						className="relative h-full w-full overflow-x-hidden mb-4"
+						className="relative h-full w-full flex-1 overflow-x-hidden mb-4"
 					>
 						<div className="absolute top-0 right-0 z-20 p-4 w-sm">
 							<LabelsTooltip
@@ -121,25 +129,35 @@ export default function Chart() {
 							/>
 						</div>
 
-						<div className="relative h-full w-full overflow-x-auto pb-14 scrollbar-gutter-stable">
-							<div className="absolute inset-0 flex flex-col pointer-events-none mb-14">
-								{Array.from({ length: 11 }).map((_, index) => (
-									<div
-										key={index}
-										className="flex-1 border-b border-b-gray-300"
-									></div>
-								))}
+						<div className="h-full w-full pb-16 custom-scroll">
+							<div className="absolute top-0 left-0 z-0 inset-0 flex flex-col w-full max-h-full pointer-events-none mb-18.5">
+								{candleData.length !== 0
+									? Array.from({ length: 11 }).map(
+											(_, index) => (
+												<div
+													key={index}
+													className="flex-1 border-b border-b-gray-300"
+												></div>
+											)
+										)
+									: null}
 							</div>
 
 							<div className="relative flex h-full">
-								{candleData.map((dataItem) => (
-									<Candle
-										candleData={dataItem}
-										key={dataItem.id}
-										onHover={handleCandleHover}
-										onLeave={handleBarLeave}
-									/>
-								))}
+								{candleData.length !== 0 ? (
+									candleData.map((dataItem) => (
+										<Candle
+											candleData={dataItem}
+											key={dataItem.id}
+											onHover={handleCandleHover}
+											onLeave={handleBarLeave}
+										/>
+									))
+								) : (
+									<div className="self-center flex-1 justify-self-center text-center">
+                                        <span>Create a new item to generate chart</span>
+                                    </div>
+								)}
 							</div>
 						</div>
 					</div>
