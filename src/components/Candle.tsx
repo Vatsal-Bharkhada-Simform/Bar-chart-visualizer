@@ -14,7 +14,7 @@ const Candle = memo(function Candle({
 	onLeave: () => void;
 }) {
 	const heightRef = useRef(0);
-    const barRef = useRef<HTMLDivElement | null>(null);
+	const barRef = useRef<HTMLDivElement | null>(null);
 
 	useLayoutEffect(() => {
 		if (!barRef.current) return;
@@ -41,7 +41,7 @@ const Candle = memo(function Candle({
 			>
 				<div
 					id={candleData.id}
-                    ref={barRef}
+					ref={barRef}
 					className={`w-20 rounded-t-xl`}
 					data-type={"BAR"}
 					style={{

@@ -4,14 +4,14 @@ import { ChartContext } from "../context/ChartContext";
 
 export default function DataForm() {
 	const { editData, addDataItem, updateDataItem } = useContext(ChartContext);
-    const formRef = useRef<HTMLFormElement | null>(null);
+	const formRef = useRef<HTMLFormElement | null>(null);
 
 	const isEditMode = editData && editData.id !== "";
 
-    useEffect(() => {
-        if(!formRef.current) return;
-        formRef.current.reset();
-    }, [editData]);
+	useEffect(() => {
+		if (!formRef.current) return;
+		formRef.current.reset();
+	}, [editData]);
 
 	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
@@ -21,9 +21,9 @@ export default function DataForm() {
 		const value = formData.get("value");
 
 		if (!label || !value) {
-            alert("Please fill all the fields");
-            return;
-        }
+			alert("Please fill all the fields");
+			return;
+		}
 
 		if (typeof label !== "string" || typeof value !== "string") return;
 
@@ -56,7 +56,7 @@ export default function DataForm() {
 	return (
 		<form
 			onSubmit={handleSubmit}
-            ref={formRef}
+			ref={formRef}
 			className={`p-4 flex flex-col gap-4 border-b border-b-gray-300 ${isEditMode && "bg-orange-100"}`}
 		>
 			<Input
@@ -70,7 +70,7 @@ export default function DataForm() {
 				maxLength={50}
 				placeholder="Enter label"
 				autoFocus
-                required
+				required
 			/>
 			<Input
 				type="number"
@@ -83,7 +83,7 @@ export default function DataForm() {
 				min={0}
 				step={"any"}
 				placeholder="Enter value"
-                required
+				required
 			/>
 			<button
 				type="submit"

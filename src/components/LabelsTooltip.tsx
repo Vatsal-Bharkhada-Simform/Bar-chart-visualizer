@@ -20,9 +20,9 @@ const LabelsTooltip = memo(function LabelsTooltip({
 		let labelY = formData.get("labelY");
 
 		if (!labelX || !labelY) {
-            alert("Labels can not be empty");
-            return;
-        }
+			alert("Labels can not be empty");
+			return;
+		}
 
 		if (typeof labelX !== "string" || typeof labelY !== "string") return;
 
@@ -44,7 +44,7 @@ const LabelsTooltip = memo(function LabelsTooltip({
 			labelX,
 			labelY,
 		});
-        setIsOpen(false);
+		setIsOpen(false);
 	}
 
 	return (

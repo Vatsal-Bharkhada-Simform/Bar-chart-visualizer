@@ -155,8 +155,10 @@ export default function Chart() {
 									))
 								) : (
 									<div className="self-center flex-1 justify-self-center text-center">
-                                        <span>Create a new item to generate chart</span>
-                                    </div>
+										<span>
+											Create a new item to generate chart
+										</span>
+									</div>
 								)}
 							</div>
 						</div>

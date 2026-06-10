@@ -11,26 +11,28 @@ export default function DataList() {
 
 	const populateListItems = useCallback(
 		function () {
-            if(data.length === 0){
-                return (
-                    <>
-                        <div className="h-full flex justify-center items-center">
-                            <span className="font-semibold text-lg text-gray-500">
-                                Nothing to show
-                            </span>
-                        </div>
-                    </>
-                )
-            } else {
-                return data.map((item) => <DataItem data={item} key={item.id} />);
-            }
+			if (data.length === 0) {
+				return (
+					<>
+						<div className="h-full flex justify-center items-center">
+							<span className="font-semibold text-lg text-gray-500">
+								Nothing to show
+							</span>
+						</div>
+					</>
+				);
+			} else {
+				return data.map((item) => (
+					<DataItem data={item} key={item.id} />
+				));
+			}
 		},
 		[data]
 	);
 
 	return (
 		<ul
-			className={`relative list-none p-4 h-full max-h-full flex flex-col-reverse gap-2 overflow-y-auto scrollbar-thin ${isEditMode && "pointer-events-none opacity-60"}`}
+			className={`relative list-none p-4 h-full max-h-full flex flex-col gap-2 overflow-y-auto scrollbar-thin ${isEditMode && "pointer-events-none opacity-60"}`}
 		>
 			{populateListItems()}
 		</ul>
@@ -40,7 +42,7 @@ export default function DataList() {
 function DataItem({ data }: { data: DataItem }) {
 	const { removeDataItem, setEditData } = useContext(ChartContext);
 	const bg = barColors[data.label[0].toUpperCase()];
-    console.log("Rendered...");
+	console.log("Rendered...");
 
 	return (
 		<>
