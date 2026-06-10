@@ -11,14 +11,26 @@ export default function DataList() {
 
 	const populateListItems = useCallback(
 		function () {
-			return data.map((item) => <DataItem data={item} key={item.id} />);
+            if(data.length === 0){
+                return (
+                    <>
+                        <div className="h-full flex justify-center items-center">
+                            <span className="font-semibold text-lg text-gray-500">
+                                Nothing to show
+                            </span>
+                        </div>
+                    </>
+                )
+            } else {
+                return data.map((item) => <DataItem data={item} key={item.id} />);
+            }
 		},
 		[data]
 	);
 
 	return (
 		<ul
-			className={`relative list-none p-4 max-h-full flex flex-col-reverse gap-2 overflow-y-auto scrollbar-thin ${isEditMode && "pointer-events-none opacity-60"}`}
+			className={`relative list-none p-4 h-full max-h-full flex flex-col-reverse gap-2 overflow-y-auto scrollbar-thin ${isEditMode && "pointer-events-none opacity-60"}`}
 		>
 			{populateListItems()}
 		</ul>
@@ -28,18 +40,19 @@ export default function DataList() {
 function DataItem({ data }: { data: DataItem }) {
 	const { removeDataItem, setEditData } = useContext(ChartContext);
 	const bg = barColors[data.label[0].toUpperCase()];
+    console.log("Rendered...");
 
 	return (
 		<>
 			<li className="flex flex-row items-center gap-2 p-2 border border-gray-300 bg-gray-50 rounded-xl group">
-				<div className="flex-1 flex gap-2">
+				<div className="flex flex-1 gap-2">
 					<div
 						className="justify-self-stretch rounded-lg w-2"
 						style={{ backgroundColor: bg }}
 					></div>
 					<div className="flex-1 flex flex-col gap-2 py-2 text-gray-700">
-						<div>
-							<span className="text-xl font-bold">
+						<div className="w-2xs">
+							<span className="text-xl font-bold inline-block w-full truncate">
 								{data.label}
 							</span>
 						</div>
