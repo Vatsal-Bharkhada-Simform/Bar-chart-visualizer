@@ -1,7 +1,7 @@
 import { memo, useLayoutEffect, useRef } from "react";
 import type { CandleData } from "../types/ChartTypes";
 
-const Candle = memo(function ({
+const Candle = memo(function Candle({
 	candleData,
 	onHover,
 	onLeave,
@@ -13,16 +13,16 @@ const Candle = memo(function ({
 	) => void;
 	onLeave: () => void;
 }) {
-	const ref = useRef(0);
+	const heightRef = useRef(0);
+    const barRef = useRef<HTMLDivElement | null>(null);
 
 	useLayoutEffect(() => {
-		const barElement = document.getElementById(candleData.id);
-		if (!barElement) return;
+		if (!barRef.current) return;
 
 		const keyframes = [{ height: candleData.height + "%" }];
-		if (!ref.current) {
+		if (!heightRef.current) {
 			keyframes.unshift({ height: "0%" });
-			ref.current = candleData.height;
+			heightRef.current = candleData.height;
 		}
 		const timing: KeyframeAnimationOptions = {
 			easing: "ease",
@@ -30,7 +30,7 @@ const Candle = memo(function ({
 			fill: "forwards",
 		};
 
-		barElement.animate(keyframes, timing);
+		barRef.current.animate(keyframes, timing);
 	}, [candleData.height, candleData.id]);
 
 	return (
@@ -41,6 +41,7 @@ const Candle = memo(function ({
 			>
 				<div
 					id={candleData.id}
+                    ref={barRef}
 					className={`w-20 rounded-t-xl`}
 					data-type={"BAR"}
 					style={{
