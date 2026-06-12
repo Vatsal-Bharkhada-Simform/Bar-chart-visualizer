@@ -3,7 +3,8 @@ import { Input } from "../UI/Input";
 import { ChartContext } from "../context/ChartContext";
 
 export function DataForm() {
-	const { editData, addDataItem, updateDataItem } = useContext(ChartContext);
+	const { editData, setEditData, addDataItem, updateDataItem } =
+		useContext(ChartContext);
 	const formRef = useRef<HTMLFormElement | null>(null);
 
 	const isEditMode = editData && editData.id !== "";
@@ -30,7 +31,7 @@ export function DataForm() {
 		label = label.trim();
 		const finalValue = Number(value);
 
-		if (!/^[-A-Za-z. ]+$/.test(label)) {
+		if (!/^(?=.*[A-Za-z])[A-Za-z0-9 ]+$/.test(label)) {
 			alert("Please provide a proper label");
 			return;
 		}
@@ -85,12 +86,30 @@ export function DataForm() {
 				placeholder="Enter value"
 				required
 			/>
-			<button
-				type="submit"
-				className="w-full px-6 py-2 border-none outline-none rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold focus:ring-3 focus:ring-blue-600 cursor-pointer"
-			>
-				{isEditMode ? "Save" : "Add"}
-			</button>
+			{isEditMode ? (
+				<div className="flex gap-2">
+					<button
+						type="submit"
+						className="w-full px-6 py-2 border-none outline-none rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold focus:ring-3 focus:ring-blue-600 cursor-pointer"
+					>
+						Save
+					</button>
+					<button
+						type="button"
+						onClick={() => setEditData(null)}
+						className="w-full px-6 py-2 border border-gray-300 outline-none rounded-xl bg-white hover:bg-gray-50 font-semibold focus:ring-2 focus:ring-gray-400 cursor-pointer"
+					>
+						Cancel
+					</button>
+				</div>
+			) : (
+				<button
+					type="submit"
+					className="w-full px-6 py-2 border-none outline-none rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold focus:ring-3 focus:ring-blue-600 cursor-pointer"
+				>
+					Add
+				</button>
+			)}
 		</form>
 	);
 }
