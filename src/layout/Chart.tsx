@@ -40,10 +40,11 @@ export function Chart() {
 			return {
 				...item,
 				height: (item.value / maxValue) * 90.9,
-				color: String(barColors[item.label[0].toUpperCase()]),
+				color: String(barColors[item.label[0].toUpperCase()] || "#aaa"),
 			};
 		});
 	}, [data, maxValue]);
+    console.log(candleData);
 
 	const handleCandleHover = useCallback(function (
 		e: React.MouseEvent<HTMLDivElement>,

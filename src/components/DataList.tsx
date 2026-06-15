@@ -41,7 +41,7 @@ export function DataList() {
 
 function DataItem({ data }: { data: DataItem }) {
 	const { removeDataItem, setEditData } = useContext(ChartContext);
-	const bg = barColors[data.label[0].toUpperCase()];
+	const bg = barColors[data.label[0].toUpperCase()] || "#aaa";
 	console.log("Rendered...");
 
 	return (
