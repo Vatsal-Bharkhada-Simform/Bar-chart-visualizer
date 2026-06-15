@@ -44,7 +44,6 @@ export function Chart() {
 			};
 		});
 	}, [data, maxValue]);
-    console.log(candleData);
 
 	const handleCandleHover = useCallback(function (
 		e: React.MouseEvent<HTMLDivElement>,
