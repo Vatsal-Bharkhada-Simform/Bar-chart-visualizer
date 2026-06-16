@@ -25,4 +25,12 @@ export const barColors: Record<string, string> = {
 	X: "#5C6BC0", // blue violet
 	Y: "#9CCC65", // yellow green
 	Z: "#EC407A", // magenta pink
+    default: "#aaa" // Default
 };
+
+export function getBarColor(label: string){
+    if(label === "") return barColors.default;
+    else {
+        return barColors[label[0].toUpperCase()] || "#aaa";
+    }
+}
