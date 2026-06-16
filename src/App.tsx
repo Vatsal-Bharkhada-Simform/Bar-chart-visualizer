@@ -1,9 +1,16 @@
+import { DataView } from "./layout/DataView";
+
 function App() {
 	return (
-		<>
-			<h1>Bar chart visualizer</h1>
-		</>
+		<div className="w-full h-screen overflow-hidden flex flex-col tracking-tighter">
+			<header className="w-full p-4 border-b border-b-gray-300">
+				<h1 className="text-xl font-semibold">Bar Chart Visualizer</h1>
+			</header>
+			<main className="w-full flex flex-1 overflow-hidden">
+				<DataView />
+			</main>
+		</div>
 	);
 }
 
-export default App;
+export { App };
