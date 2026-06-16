@@ -112,21 +112,25 @@ export function Chart() {
 					</div>
 					<div className="h-full border-r border-r-gray-300 pb-18.5 flex flex-col-reverse min-w-8">
 						{data.length !== 0
-							? Array.from({ length: GRID_LINES_COUNT }).map((_, index) => {
-									return (
-										<div
-											className="flex-1 flex justify-end items-end"
-											key={index}
-										>
-											<span className="text-gray-400 px-2 translate-y-1/2">
-												{(
-													(maxValue / (GRID_LINES_COUNT-1)) *
-													index
-												).toFixed(2)}
-											</span>
-										</div>
-									);
-								})
+							? Array.from({ length: GRID_LINES_COUNT }).map(
+									(_, index) => {
+										return (
+											<div
+												className="flex-1 flex justify-end items-end"
+												key={index}
+											>
+												<span className="text-gray-400 px-2 translate-y-1/2">
+													{(
+														(maxValue /
+															(GRID_LINES_COUNT -
+																1)) *
+														index
+													).toFixed(2)}
+												</span>
+											</div>
+										);
+									}
+								)
 							: ""}
 					</div>
 					<div
@@ -143,14 +147,14 @@ export function Chart() {
 						<div className="h-full w-full pb-16 custom-scroll">
 							<div className="absolute top-0 left-0 z-0 inset-0 flex flex-col w-full max-h-full pointer-events-none mb-18.5">
 								{candleData.length !== 0
-									? Array.from({ length: GRID_LINES_COUNT }).map(
-											(_, index) => (
-												<div
-													key={index}
-													className="flex-1 border-b border-b-gray-300"
-												></div>
-											)
-										)
+									? Array.from({
+											length: GRID_LINES_COUNT,
+										}).map((_, index) => (
+											<div
+												key={index}
+												className="flex-1 border-b border-b-gray-300"
+											></div>
+										))
 									: null}
 							</div>
 
