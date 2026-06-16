@@ -69,14 +69,14 @@ function DataListItem({ item }: { item: DataItem }) {
 						title="Edit item"
 						onClick={() => setEditData(item)}
 					>
-						<Icon id="edit" />
+						<Icon id="edit" aria-label="Edit item" />
 					</button>
 					<button
 						className="p-2 border-none outline-none bg-transparent rounded-lg hover:bg-red-100 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
 						title="Delete item"
 						onClick={() => removeDataItem(item)}
 					>
-						<Icon id="trashBin" />
+						<Icon id="trashBin" aria-label="Delete item" />
 					</button>
 				</div>
 			</li>

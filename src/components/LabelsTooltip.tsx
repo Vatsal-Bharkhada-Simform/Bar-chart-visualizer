@@ -60,7 +60,7 @@ const LabelsTooltip = memo(function LabelsTooltip({
 					onClick={() => setIsOpen((prev) => !prev)}
 					type="button"
 				>
-					<Icon id="chevron-down" />
+					<Icon id="chevron-down" aria-hidden />
 				</button>
 			</div>
 			<div className={`flex flex-col gap-2 ${!isOpen && "hidden"}`}>
