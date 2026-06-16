@@ -7,11 +7,22 @@ import {
 	useState,
 } from "react";
 import { ChartContext } from "../context/ChartContext";
-import { barColors } from "../utils/barColors";
+import { getBarColor } from "../utils/barColors";
 import type { CandleData, LabelType, ToolTipState } from "../types/ChartTypes";
 import { Candle } from "../components/Candle";
 import { Tooltip } from "../components/Tooltip";
 import { LabelsTooltip } from "../components/LabelsTooltip";
+
+// Overview:
+
+// In the bar chart, we will be showing 11 y-axis labels from 0 to maxValue(highest value from the bars).
+// 1 plot of 0 value, rest 10 plots representing 10% incremental plots relative to maxValue.
+// We'll need sections dividing the chart area into 11 equal parts and the bottom border of each section will be used as a grid line.
+// The bars will be plotted up till 10 sections to reserve some space at the top of graph area.
+// As we are only utilizing 10 sections out of 11, we need to scale the bars in the same ratio i.e. 10/11.
+
+const MAX_HEIGHT_PERCENT = 90.9; // This number represents the 10/11 ratio in percentage.
+const GRID_LINES_COUNT = 11; // Count for the grid lines
 
 export function Chart() {
 	const [toolTip, setToolTip] = useState<ToolTipState>({
@@ -33,14 +44,14 @@ export function Chart() {
 	const maxValue = data.reduce((acc, item) => {
 		if (item.value > acc) acc = item.value;
 		return acc;
-	}, 0);
+	}, 1);
 
 	const candleData = useMemo(() => {
 		return data.map((item) => {
 			return {
 				...item,
-				height: (item.value / maxValue) * 90.9,
-				color: String(barColors[item.label[0].toUpperCase()] || "#aaa"),
+				height: (item.value / maxValue) * MAX_HEIGHT_PERCENT,
+				color: getBarColor(item.label),
 			};
 		});
 	}, [data, maxValue]);
@@ -101,7 +112,7 @@ export function Chart() {
 					</div>
 					<div className="h-full border-r border-r-gray-300 pb-18.5 flex flex-col-reverse min-w-8">
 						{data.length !== 0
-							? Array.from({ length: 11 }).map((_, index) => {
+							? Array.from({ length: GRID_LINES_COUNT }).map((_, index) => {
 									return (
 										<div
 											className="flex-1 flex justify-end items-end"
@@ -109,7 +120,7 @@ export function Chart() {
 										>
 											<span className="text-gray-400 px-2 translate-y-1/2">
 												{(
-													(maxValue / 10) *
+													(maxValue / (GRID_LINES_COUNT-1)) *
 													index
 												).toFixed(2)}
 											</span>
@@ -132,7 +143,7 @@ export function Chart() {
 						<div className="h-full w-full pb-16 custom-scroll">
 							<div className="absolute top-0 left-0 z-0 inset-0 flex flex-col w-full max-h-full pointer-events-none mb-18.5">
 								{candleData.length !== 0
-									? Array.from({ length: 11 }).map(
+									? Array.from({ length: GRID_LINES_COUNT }).map(
 											(_, index) => (
 												<div
 													key={index}
